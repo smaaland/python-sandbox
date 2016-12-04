@@ -12,20 +12,19 @@ with open('input2.txt', 'r') as f:
 
         print('Starting from {}'.format((pos_x + 1, pos_y + 1)))
 
-        for c in line:
+        for c in line.strip(' '):
             if c == 'U':
-                pos_y = pos_y + 1 if pos_y + 1 <= 1 else 1
-            elif c == 'D':
                 pos_y = pos_y - 1 if pos_y - 1 >= -1 else -1
+            elif c == 'D':
+                pos_y = pos_y + 1 if pos_y + 1 <= 1 else 1
             elif c == 'L':
                 pos_x = pos_x - 1 if pos_x - 1 >= -1 else -1
-            else:
-                # 'R'
+            elif c == 'R':
                 pos_x = pos_x + 1 if pos_x + 1 <= 1 else 1
 
         # Move the coordinates
         print(pos_x+1, pos_y+1)
         sequence.append(buttons[pos_y+1][pos_x+1])
 
-    print(sequence)
+    print(''.join(sequence))
 
