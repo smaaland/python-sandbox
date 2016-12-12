@@ -57,11 +57,9 @@ with open('input7.txt', 'r') as f:
                         if bracket_level < 1:
                             # outside
                             outside.append(line[chars_parsed-2:chars_parsed+1])
-                            pass
                         else:
                             # inside
                             inside.append(line[chars_parsed - 2:chars_parsed+1])
-                            pass
 
             chars_parsed += 1
 
