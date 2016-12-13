@@ -10,8 +10,6 @@ with open('input2.txt', 'r') as f:
 
     for line in f:
 
-        # print('Starting from {}'.format((pos_x + 1, pos_y + 1)))
-
         for c in line.strip(' '):
             if c == 'U':
                 pos_y = pos_y - 1 if pos_y - 1 >= -1 else -1
@@ -73,8 +71,6 @@ with open('input2.txt', 'r') as f:
     pos_y = 2
 
     for line in f:
-
-        # print('Starting from {}'.format((pos_x + 1, pos_y + 1)))
 
         for c in line.strip(' '):
             if can_i_go(c, pos_x, pos_y):
