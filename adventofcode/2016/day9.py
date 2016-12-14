@@ -9,10 +9,12 @@ def decompress_string(s):
         elif c == ')':
             bracket_level -= 1
         else:
-            if
+            if bracket_level < 1:
+                new_str += c
 
     return new_str
 
 with open('input9.txt', 'r') as f:
     for line in f:
         s = decompress_string(line.strip())
+        print(s)
