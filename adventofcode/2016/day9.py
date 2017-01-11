@@ -1,4 +1,3 @@
-import re
 import sys
 sys.setrecursionlimit(100000)
 
@@ -44,82 +43,7 @@ def decompress_string_iteration(s):
     return new_str
 
 
-def decompress_string(s):
-    did_something = True
-    while did_something:
-        s, did_something = decompress_string_iteration(s)
-        print(len(s))
-
-    return s
-
-
-def get_len_of_string(s):
-    regexp = re.compile(r'\(\w+x\w+\)')
-    if regexp.search(s) is None:
-        return len(s)
-    else:
-        indexes = [(m.start(0), m.end(0)) for m in re.finditer(r'\(\w+x\w+\)', s)]
-        print(indexes)
-
-
-def part2(l, total_length=0, string_to_prepend='', inside_str='', skipping=0, to_pop = 0):
-    bracket_level = 0
-    l = s[:]
-    if len(string_to_prepend) and skipping == 0:
-        l = list(string_to_prepend) + s
-        string_to_prepend = ''
-
-    # l = list(s)
-    # inside_str = ''
-    # skipping = 0
-
-    if len(l):
-        for c in l:
-            # print(c)
-            if skipping > 0:
-                skipping -= 1
-            else:
-                if c == '(':
-                    bracket_level += 1
-                    #l.pop(0)
-                    to_pop += 1
-
-                elif c == ')':
-                    bracket_level -= 1
-                    # l.pop(0)
-                    to_pop += 1
-
-                    # print("HERE")
-                    # print(inside_str)
-                    # print(len(l))
-                    # print(total_length)
-                    characters_to_repeat, multiplier = [int(i) for i in
-                                                        inside_str.split('x')]
-                    inside_str = ''
-                    app = ''
-                    for _ in range(characters_to_repeat):
-                        app += l.pop(0)
-
-                    for _ in range(multiplier):
-                        string_to_prepend += app
-                    skipping = characters_to_repeat
-
-                else:
-                    if bracket_level < 1:
-                        # removing regular character
-                        l.pop(0)
-                        total_length += 1
-                    else:
-                        # inside the parenthesis
-                        l.pop(0)
-                        inside_str += c
-                        pass
-        return part2(l, total_length, string_to_prepend, inside_str, skipping)
-    else:
-        return total_length
-
-
-def part22(l, total_length=0, string_to_prepend=[], inside_str='', skipping=0, bracket_level=0):
+def part_2_recursive(l, total_length=0, string_to_prepend=[], inside_str='', skipping=0, bracket_level=0):
 
     if len(string_to_prepend) and skipping == 0:
         l = string_to_prepend + l
@@ -128,12 +52,6 @@ def part22(l, total_length=0, string_to_prepend=[], inside_str='', skipping=0, b
     if len(l):
         print(len(l))
         c = l.pop(0)
-        # print(bracket_level)
-
-        # if len(l) == 13897:
-        #     print(l)
-        #     print(c)
-        #     print(inside_str)
 
         if skipping > 0:
             skipping -= 1
@@ -144,12 +62,6 @@ def part22(l, total_length=0, string_to_prepend=[], inside_str='', skipping=0, b
         elif c == ')':
             bracket_level -= 1
 
-            # print(l)
-            # print("***")
-            # print(skipping)
-            # print(inside_str)
-            # print(len(l))
-            # print(total_length)
             characters_to_repeat, multiplier = [int(i) for i in
                                                 inside_str.split('x')]
             inside_str = ''
@@ -158,13 +70,8 @@ def part22(l, total_length=0, string_to_prepend=[], inside_str='', skipping=0, b
 
             for _ in range(multiplier):
                 string_to_prepend += app
+
             skipping = characters_to_repeat
-
-            # if len(l) == 13897:
-            #     print('----')
-            #     print(inside_str)
-            #     print(string_to_prepend)
-
         else:
             if bracket_level < 1:
                 # removing regular character
@@ -173,7 +80,7 @@ def part22(l, total_length=0, string_to_prepend=[], inside_str='', skipping=0, b
                 # inside the parenthesis
                 inside_str += c
                 pass
-        return part22(l, total_length, string_to_prepend, inside_str, skipping, bracket_level)
+        return part_2_recursive(l, total_length, string_to_prepend, inside_str, skipping, bracket_level)
     else:
         return total_length
 
@@ -210,5 +117,5 @@ with open('input9.txt', 'r') as f:
         s = line.strip()
         # print(s)
         # print(list(s))
-        num = part22(list(s))
+        num = part_2_recursive(list(s))
         print('Part 2: {}'.format(num))
