@@ -1,4 +1,6 @@
 import re
+import sys
+sys.setrecursionlimit(100000)
 
 
 def decompress_string_iteration(s):
@@ -88,9 +90,9 @@ def part2(l, total_length=0, string_to_prepend='', inside_str='', skipping=0, to
                     to_pop += 1
 
                     # print("HERE")
-                    print(inside_str)
-                    print(len(l))
-                    print(total_length)
+                    # print(inside_str)
+                    # print(len(l))
+                    # print(total_length)
                     characters_to_repeat, multiplier = [int(i) for i in
                                                         inside_str.split('x')]
                     inside_str = ''
@@ -117,14 +119,24 @@ def part2(l, total_length=0, string_to_prepend='', inside_str='', skipping=0, to
         return total_length
 
 
-def part22(l, total_length=0, string_to_prepend='', inside_str='', skipping=0, bracket_level=0):
+def part22(l, total_length=0, string_to_prepend=[], inside_str='', skipping=0, bracket_level=0):
 
     if len(string_to_prepend) and skipping == 0:
-        l = list(string_to_prepend) + l
-        string_to_prepend = ''
+        l = string_to_prepend + l
+        string_to_prepend = []
 
     if len(l):
+        print(len(l))
         c = l.pop(0)
+        # print(bracket_level)
+
+        # if len(l) == 13897:
+        #     print(l)
+        #     print(c)
+        #     print(inside_str)
+
+        if skipping > 0:
+            skipping -= 1
 
         if c == '(':
             bracket_level += 1
@@ -132,20 +144,26 @@ def part22(l, total_length=0, string_to_prepend='', inside_str='', skipping=0, b
         elif c == ')':
             bracket_level -= 1
 
-            # print("HERE")
-            print(inside_str)
-            print(len(l))
-            print(total_length)
+            # print(l)
+            # print("***")
+            # print(skipping)
+            # print(inside_str)
+            # print(len(l))
+            # print(total_length)
             characters_to_repeat, multiplier = [int(i) for i in
                                                 inside_str.split('x')]
             inside_str = ''
-            app = ''
-            for _ in range(characters_to_repeat):
-                app += l.pop(0)
+
+            app = l[:characters_to_repeat]
 
             for _ in range(multiplier):
                 string_to_prepend += app
             skipping = characters_to_repeat
+
+            # if len(l) == 13897:
+            #     print('----')
+            #     print(inside_str)
+            #     print(string_to_prepend)
 
         else:
             if bracket_level < 1:
