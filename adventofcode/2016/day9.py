@@ -181,7 +181,7 @@ def get_len_of_string(s):
             # print(s)
     return total
 
-
+@profile
 def get_len_of_string_no_regex(s):
     total = 0
     iterations = 0
@@ -196,9 +196,9 @@ def get_len_of_string_no_regex(s):
             s = ''
         else:
 
-            # start = s.find('(')
-            end = s[s.find('('):].find(')') + s.find('(')
-            marker = s[s.find('(')+1:end].split('x')
+            start = s.find('(')
+            end = s[start:].find(')') + start
+            marker = s[start+1:end].split('x')
             total += s.find('(')
 
             s = s[end+1:end +1+ int(marker[0])] * int(marker[1]) + s[
@@ -206,7 +206,7 @@ def get_len_of_string_no_regex(s):
                                                                  int(marker[1]):]
     return total
 
-
+@profile
 def decompress(s, part2=True):
     if '(' not in s:
         return len(s)
@@ -242,18 +242,18 @@ with open('input9.txt', 'r') as f:
         # s = part_2_loop(list(s))
         # print(s)
 
-        s = '(27x12)(20x12)(13x14)(7x10)(1x12)A'
-        print(s)
-        s = get_len_of_string(s)
-        print(s)
+        # s = '(27x12)(20x12)(13x14)(7x10)(1x12)A'
+        # print(s)
+        # s = get_len_of_string(s)
+        # print(s)
 
         # s = '(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN'
         # print(s)
         # s = part_2_loop(list(s))
         # print(s)
 
-        s = decompress_string_iteration(line.strip())
-        print('Part 1: {}'.format(len(s)))
+        # s = decompress_string_iteration(line.strip())
+        # print('Part 1: {}'.format(len(s)))
 
         s = line.strip()
         # print(s)
