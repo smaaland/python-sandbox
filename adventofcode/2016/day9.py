@@ -182,7 +182,32 @@ def get_len_of_string(s):
     return total
 
 
-def decompress(s, part2 = True):
+def get_len_of_string_no_regex(s):
+    total = 0
+    iterations = 0
+    while len(s):
+
+        if not iterations % 10000:
+            print(len(s))
+        iterations += 1
+
+        if '(' not in s:
+            total += len(s)
+            s = ''
+        else:
+
+            # start = s.find('(')
+            end = s[s.find('('):].find(')') + s.find('(')
+            marker = s[s.find('(')+1:end].split('x')
+            total += s.find('(')
+
+            s = s[end+1:end +1+ int(marker[0])] * int(marker[1]) + s[
+                                                                 end +
+                                                                 int(marker[1]):]
+    return total
+
+
+def decompress(s, part2=True):
     if '(' not in s:
         return len(s)
     ret = 0
@@ -235,5 +260,5 @@ with open('input9.txt', 'r') as f:
         # print(list(s))
         # num = part_2_recursive(list(s))
         # num = part_2_loop(list(s))
-        num = decompress(s)
+        num = get_len_of_string_no_regex(s)
         print('Part 2: {}'.format(num))
