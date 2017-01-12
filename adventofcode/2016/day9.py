@@ -181,7 +181,7 @@ def get_len_of_string(s):
             # print(s)
     return total
 
-@profile
+
 def get_len_of_string_no_regex(s):
     total = 0
     iterations = 0
@@ -206,7 +206,7 @@ def get_len_of_string_no_regex(s):
                                                                  int(marker[1]):]
     return total
 
-@profile
+
 def decompress(s, part2=True):
     if '(' not in s:
         return len(s)
