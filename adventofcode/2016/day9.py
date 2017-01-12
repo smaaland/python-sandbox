@@ -181,6 +181,24 @@ def get_len_of_string(s):
             # print(s)
     return total
 
+
+def decompress(s, part2 = True):
+    if '(' not in s:
+        return len(s)
+    ret = 0
+    while '(' in s:
+        ret += s.find('(')
+        s = s[s.find('('):]
+        marker = s[1:s.find(')')].split('x')
+        s = s[s.find(')') + 1:]
+        if part2:
+            ret += decompress(s[:int(marker[0])]) * int(marker[1])
+        else:
+            ret += len(s[:int(marker[0])]) * int(marker[1])
+        s = s[int(marker[0]):]
+    ret += len(s)
+    return ret
+
 with open('input9.txt', 'r') as f:
     for line in f:
         #print(line)
@@ -217,5 +235,5 @@ with open('input9.txt', 'r') as f:
         # print(list(s))
         # num = part_2_recursive(list(s))
         # num = part_2_loop(list(s))
-        num = get_len_of_string(s)
+        num = decompress(s)
         print('Part 2: {}'.format(num))
