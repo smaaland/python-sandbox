@@ -25,24 +25,26 @@ class State:
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
 
+    def __repr__(self):
+        return 'level: {} - pairs: {}'.format(self.level, self.pairs)
+
+    def __str__(self):
+        return 'level: {} - pairs: {}'.format(self.level, self.pairs)
+
 
 def parse_initial_state():
     with open('input11.txt', 'r') as f:
         contents = {}
         c = 1
         for line in f:
-            instr = line.strip().replace(', and', '').replace(', ',
-                                                              ' ').strip(
-
-            ).split(
-                ' a ')[1:]
+            instr = line.strip().replace(', and', '').replace(', ', ' ') \
+                        .strip().split(' a ')[1:]
             content = []
             for i in instr:
                 content.append(''.join([s[0] for s in i.split(' ')]))
             contents[c] = content
             c += 1
 
-        # print(contents)
         pairs = []
 
         for c in ['s', 'p', 't', 'r', 'c']:
@@ -57,7 +59,14 @@ def parse_initial_state():
         return State(level=1, pairs=pairs)
 
 
-def get_possible_moves(state):
+def validate_state(state, old_states):
+    # TODO validate against valid and not visited
+    # for all chips pair[0], it's ok if it's on the same level as
+    # it's RTG OR if there are no other RTG:s there
+    return True
+
+
+def get_possible_moves(state, old_states):
     l = state.level
 
     if l == 1:
@@ -69,26 +78,32 @@ def get_possible_moves(state):
 
     possibilities = []
     for level in possible_levels:
+        # select ONE
+
+        # select TWO
+
+        # We can bring AT MOST two items (no matter which) in ONE direction
+        # select one or two of any type to bring THAT ARE ON THIS LEVEL
+
         for p in state.pairs:
-            # We can bring at most two items (no matter which) in ONE direction
             print(p)
             # TODO return the states that's possible
 
-            # create a state and append to the possibilities list
+            new_pairs = []
+            new_state = State(level=level, pairs=new_pairs)
+            if validate_state(new_state, old_states=old_states):
+                possibilities.append(new_state)
 
-    # TODO validate against valid and not visited
     return possibilities
 
 
 floor = 1
 instructions = []
 current_state = False
-states = []
+states = [parse_initial_state()]
 
-
-states.append(parse_initial_state())
 print(states)
 
 # keep states in the recursive algorithm or loop somehow
-possible_moves = get_possible_moves(states[-1])
+possible_moves = get_possible_moves(states[-1], states)
 print(possible_moves)
