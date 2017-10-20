@@ -27,7 +27,32 @@ def contains_naughty_strings(word):
 with open('input5.txt', 'r') as f:
     total = 0
     for line in f:
-        if num_allowed_vowels(line) >= 3 and at_least_two_consecutive_chars(line) and not contains_naughty_strings(line):
+        if num_allowed_vowels(line) >= 3 and at_least_two_consecutive_chars(
+                line) and not contains_naughty_strings(line):
+            total += 1
+
+    print(total)
+
+
+def has_non_overlapping_pairs(word):
+    for i1 in range(len(word)-1):
+        for i2 in range(len(word) - 1):
+            if word[i1:i1+2] == word[i2:i2+2] and abs(i1-i2)>1:
+                return True
+    return False
+
+
+def repeat_after_one_letter(word):
+    for i in range(len(word)-2):
+        if word[i] == word[i+2]:
+            return True
+    return False
+
+
+with open('input5.txt', 'r') as f:
+    total = 0
+    for line in f:
+        if has_non_overlapping_pairs(line) and repeat_after_one_letter(line):
             total += 1
 
     print(total)
