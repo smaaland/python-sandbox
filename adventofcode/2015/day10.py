@@ -1,4 +1,5 @@
-input = '1321131112'
+input = '1113122113'
+
 
 def it(st):
     last_val = ''
@@ -9,7 +10,7 @@ def it(st):
             # First iteration
             last_val = c
         elif c == last_val:
-            count+=1
+            count += 1
         else:
             new += str(count)
             new += str(last_val)
@@ -20,10 +21,15 @@ def it(st):
     new += str(last_val)
     return new
 
-print(input)
 
-print(it(input))
+for x in range(40):
+    print(x)
+    input = it(input)
 
+print(len(input))
+
+
+input = '1113122113'
 for x in range(50):
     print(x)
     input = it(input)
