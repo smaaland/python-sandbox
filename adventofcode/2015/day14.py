@@ -4,9 +4,8 @@ with open('input14.txt', 'r') as f:
 
     for line in f:
         parts = line.split(' ')
-        print(parts)
         data[parts[0]] = {}
-        data[parts[0]]['total'] = 0
+        data[parts[0]]['total_distance'] = 0
         data[parts[0]]['speed'] = int(parts[3])
         data[parts[0]]['time'] = int(parts[6])
         data[parts[0]]['wait'] = int(parts[13])
@@ -21,16 +20,16 @@ with open('input14.txt', 'r') as f:
 for t in range(2503):
 
     for r in data:
-        data[r]['total'] += data[r]['seq'][t % len(data[r]['seq'])]
+        data[r]['total_distance'] += data[r]['seq'][t % len(data[r]['seq'])]
 
-    max = 0
+    max_distance = 0
     for r in data:
-        max = data[r]['total'] if data[r]['total'] > max else max
+        max_distance = data[r]['total_distance'] if data[r]['total_distance'] > max_distance else max_distance
 
     for r in data:
-        if data[r]['total'] == max:
+        if data[r]['total_distance'] == max_distance:
             data[r]['score'] += 1
 
-for x in data:
-    # print(data[x]['total'])
-    print(data[x]['score'])
+
+print(max([data[x]['total_distance'] for x in data.keys()]))
+print(max([data[x]['score'] for x in data.keys()]))
