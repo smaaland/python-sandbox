@@ -1,22 +1,27 @@
-__author__ = 'smaaland'
+val = 36000000
+top = int(val / 10)
+packets = [0 for _ in range(val)]
+max_packets = 0
+stop = False
 
-elf = 2
-packets = dict()
+for i in range(1, top + 1):
+    for j in range(i, top + 1, i):
+        # if j not in packets.keys():
+        #     packets[j] = 0
 
-current_house = 1
+        packets[j] += i
 
-while True:
+        if packets[j] > max_packets:
+            max_packets = packets[j]
+            print(max_packets)
 
-    for y in range(1, current_house+1):
-        # Go through the elves
-        # Should elf x put packets in house y?
-        if current_house%y == 0:
-            # Yes
-            if not y in packets:
-                packets[y] = 0
-            packets[y] += 10*y
-    # packets[elf] = elf
-    current_house += 1
-    if current_house == 3:
-        print(packets)
+        if packets[j] >= top:
+            stop = True
+            print('---')
+            print(packets[j])
+            print(j)
+
+    if stop:
         exit()
+
+# 3326400 fail
