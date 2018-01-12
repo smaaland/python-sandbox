@@ -17,20 +17,20 @@ with open('input18.txt', 'r') as f:
 
 def neighbours(state, col, row):
     n = 0
-    for x in range(col-1, col+2):
-        for y in range(row-1, row+2):
+    for x in range(col - 1, col + 2):
+        for y in range(row - 1, row + 2):
             try:
                 if not (col == x and row == y):
                     if state[x][y] == '#':
                         # if col == 1 and row == 1:
-                            # print(x,y)
+                        # print(x,y)
                         n += 1
             except KeyError:
                 pass
     return n
 
 
-def rec(state_orig, iterations):
+def rec(state_orig, iterations, corners_on=False):
     state = {}
     for x in range(100):
         for y in range(100):
@@ -41,8 +41,8 @@ def rec(state_orig, iterations):
     for x in range(100):
         for y in range(100):
             n = neighbours(state_orig, x, y)
-            if state[x][y] == '#':
-                # it's on now
+            if state_orig[x][y] == '#':
+                # it was on
                 if n == 2 or n == 3:
                     # Should be on in the next state
                     pass
@@ -55,13 +55,14 @@ def rec(state_orig, iterations):
                     # Should be on in the next state
                     state[x][y] = '#'
                 else:
-                    # Should be off in the next state
+                    # Should still be off in the next state
                     pass
 
-    state[0][0] = '#'
-    state[0][99] = '#'
-    state[99][0] = '#'
-    state[99][99] = '#'
+    if corners_on:
+        state[0][0] = '#'
+        state[0][99] = '#'
+        state[99][0] = '#'
+        state[99][99] = '#'
 
     iterations += 1
     if iterations == 100:
@@ -71,12 +72,15 @@ def rec(state_orig, iterations):
             for _y in range(100):
                 if state[_x][_y] == '#':
                     on += 1
-        print('---', on)
+        print(on)
         return
     else:
-        rec(state, iterations)
+        rec(state, iterations, corners_on)
+
+
+rec(current_state, 0)
 current_state[0][0] = '#'
 current_state[0][99] = '#'
 current_state[99][0] = '#'
 current_state[99][99] = '#'
-rec(current_state, 0)
+rec(current_state, 0, True)
