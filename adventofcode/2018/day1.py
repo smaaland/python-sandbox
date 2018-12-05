@@ -1,8 +1,7 @@
 lines = []
 with open('input1.txt', 'r') as f:
     for line in f:
-        line = line.strip()
-        lines.append(line)
+        lines.append(line.strip())
 
     sum = 0
     for line in lines:
