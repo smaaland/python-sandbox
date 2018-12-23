@@ -25,19 +25,11 @@ with open('input5.txt', 'r') as f:
     for line in f:
         data += line.strip()
 
-    # input = 'dabAcCaCBAcCcaDA'
-
     print(f'Part 1: {len(react(data))}')
-    # print(len(data))
 
     lengths = []
     for char in string.ascii_lowercase:
-        print(char)
-        s = data.strip(char).strip(char.upper())
-        print(len(s))
+        s = data.replace(char, '').replace(char.upper(), '')
         c = react(s)
-        print(len(c))
         lengths.append(len(c))
-
-    print(lengths)
     print(f'Part 2: {min(lengths)}')
