@@ -7,6 +7,7 @@ def manhattan_distance(a: List, b: List) -> int:
 
 data = {}
 counters = {}
+sum_distances_threshold = 10000
 
 counter = 0
 with open('input6.txt', 'r') as f:
@@ -20,11 +21,15 @@ with open('input6.txt', 'r') as f:
     max_y = max([data[r][1] for r in data])
 
     matrix = [[None for _ in range(min_x, max_x + 1)] for _ in range(min_y, max_y + 1)]
+    distances_matrix = [[0 for _ in range(min_x, max_x + 1)] for _ in range(min_y, max_y + 1)]
 
     for y in range(min_y, max_y + 1):
         for x in range(min_x, max_x + 1):
             distances = {z: manhattan_distance([x, y], [data[z][0], data[z][1]]) for z in data}
             min_distance = min(distances.values())
+            sum_distances = sum(distances.values())
+            if sum_distances < sum_distances_threshold:
+                distances_matrix[y - min_y][x - min_x] = 1
             min_keys = [key for key in distances if distances[key] == min_distance]
 
             if len(min_keys) > 1:
@@ -42,8 +47,7 @@ with open('input6.txt', 'r') as f:
     all_distances = []
     for y in matrix:
         all_distances.extend(y)
-    finite_distances = [x for x in all_distances if
-                        x not in on_the_edge and x is not None]
+    finite_distances = [x for x in all_distances if x not in on_the_edge and x is not None]
 
     for i in finite_distances:
         if i in counters:
@@ -51,3 +55,8 @@ with open('input6.txt', 'r') as f:
         else:
             counters[i] = 1
     print(f'Part 1: {max(counters.values())}')
+
+    all_sum_distances = []
+    for y in distances_matrix:
+        all_sum_distances.extend(y)
+    print(f'Part 2: {sum(all_sum_distances)}')
