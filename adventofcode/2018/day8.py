@@ -14,7 +14,7 @@ def rec_row(row):
     if c == 0:
         return totals, sum(data[:m]), data[m:]
     else:
-        return totals, sum(scores[k - 1] for k in data[:m] if k > 0 and k <= len(scores)), data[m:]
+        return totals, sum(scores[k - 1] for k in data[:m] if 0 < k <= len(scores)), data[m:]
 
 
 with open('input8.txt', 'r') as f:
