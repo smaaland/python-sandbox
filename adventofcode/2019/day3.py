@@ -1,9 +1,13 @@
-from typing import List
+from typing import List, Dict, Tuple, Any
 
 
-def coordinates_visited(x: int, y: int, moves: List) -> List:
+def coordinates_visited(moves: List) -> Tuple[List[Any], Dict[Any, Any]]:
 
     visited: List = [(0, 0)]
+    distances: Dict = {}
+    x: int = 0
+    y: int = 0
+    distance = 0
 
     for move in moves:
         direction, steps = move[:1], int(move[1:])
@@ -25,9 +29,14 @@ def coordinates_visited(x: int, y: int, moves: List) -> List:
 
         for y in y_range:
             for x in x_range:
+                distance += 1
+                if f"{x},{y}" not in distances:
+                    distances[f"{x},{y}"] = distance
+                else:
+                    distances[f"{x},{y}"] = min(distances[f"{x},{y}"], distance)
                 visited.append((x, y))
 
-    return visited
+    return visited, distances
 
 
 def manhattan_distance(a: List, b: List) -> int:
@@ -40,13 +49,18 @@ with open('input3.txt', 'r') as f:
         wires.append(line.strip().split(','))
 
     points: List = []
+    distances: Dict[str, int] = {}
     for i in range(len(wires)):
-        points.append(coordinates_visited(x=0, y=0, moves=wires[i]))
+        visited, _distances = coordinates_visited(moves=wires[i])
+        points.append(visited)
+        for k, v in _distances.items():
+            distances[k] = v if k not in distances else distances[k] + v
 
     intersections = list(set(points[0]).intersection(points[1]))
     intersections.remove((0, 0))
 
-    part_1 = min(manhattan_distance([0, 0], list(x)) for x in intersections)
-
+    part_1 = min(manhattan_distance([0, 0], list(key)) for key in intersections)
+    part_2 = min([distances[f'{key[0]},{key[1]}'] for key in intersections])
 
 print(f'Part 1: {part_1}')
+print(f'Part 2: {part_2}')
