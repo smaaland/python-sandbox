@@ -1,4 +1,5 @@
 import math
+from typing import Tuple
 
 with open('input9.txt', 'r') as f:
     lines = [[int(x) for x in list(line.rstrip())] for line in f]
@@ -27,7 +28,7 @@ print(f"Part 1: {sum(risk_levels)}")
 basins = {k: [k] for k in low_points}
 
 
-def find_neighbours(low_point, x, y):
+def find_neighbours(low_point: Tuple[int, int], x: int, y: int) -> None:
     if y - 1 >= 0:
         if lines[y - 1][x] != 9:
             if (x, y-1) not in basins[low_point]:
