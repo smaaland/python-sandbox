@@ -38,15 +38,12 @@ def traverse_2(path: List[str], position: str) -> None:
         counter = Counter(path)
         if n.isupper():
             traverse_2(copy.deepcopy(path), n)
-        elif (n not in path or len([k for k, v in dict(counter).items() if counter[k] > 1]) < 1) and n != 'start':
+        elif (n not in path or len([k for k, v in dict(counter).items() if counter[k] > 1 and k.islower()]) < 1) and n != 'start':
             traverse_2(copy.deepcopy(path), n)
 
 
 traverse([], 'start')
 traverse_2([], 'start')
-
-for l in distinct_paths_2:
-    print(l)
 
 print(f"Part 1: {len(distinct_paths_1)}")
 print(f"Part 1: {len(distinct_paths_2)}")
