@@ -28,5 +28,5 @@ def run(steps):
     return lmax - lmin
 
 
-print('part 1:', run(10))
-print('part 2:', run(40))
+print(f"Part 1: {run(10)}")
+print(f"Part 2: {run(40)}")
