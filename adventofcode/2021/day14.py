@@ -11,21 +11,20 @@ pairs = [''.join(p) for p in zip(template, template[1:])]
 def run(steps):
     ctr = Counter(pairs)
     for i in range(steps):
-        newCtr = {key: 0 for key in rules.keys()}
+        new_ctr = {key: 0 for key in rules.keys()}
         for key, value in ctr.items():
-            newCtr[rules[key][0]] += value
-            newCtr[rules[key][1]] += value
-        ctr = newCtr
+            new_ctr[rules[key][0]] += value
+            new_ctr[rules[key][1]] += value
+        ctr = new_ctr
 
-    letterTotals = {letter: 0 for letter in list(string.ascii_uppercase)}
+    letter_totals = {letter: 0 for letter in list(string.ascii_uppercase)}
     for key, value in ctr.items():
-        letterTotals[key[0]] += value
+        letter_totals[key[0]] += value
 
-    # the last character in the template gets another count
-    letterTotals[template[-1]] += 1
+    letter_totals[template[-1]] += 1
 
-    lmax = max(letterTotals.values())
-    lmin = min([value for value in letterTotals.values() if value > 0])
+    lmax = max(letter_totals.values())
+    lmin = min([value for value in letter_totals.values() if value > 0])
     return lmax - lmin
 
 
