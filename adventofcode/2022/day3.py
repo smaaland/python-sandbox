@@ -1,6 +1,3 @@
-from collections import deque
-from itertools import islice
-
 lines = [line.strip() for line in open('input3.txt', 'r').readlines()]
 priorities = []
 priorities_2 = []
