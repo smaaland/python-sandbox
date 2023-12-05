@@ -3,6 +3,7 @@ lines = [line.strip() for line in open("input1.txt", "r").readlines()]
 calibration_values = []
 
 for line in lines:
+    left, right = "", ""
     for c in line:
         if c.isdigit():
             left = c
@@ -39,6 +40,7 @@ def find_int(input_str, reversed_keys=False):
 
 calibration_values = []
 for line in lines:
+    left, right = "", ""
     for i, c in enumerate(line):
         if c.isdigit():
             left = c

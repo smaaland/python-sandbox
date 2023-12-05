@@ -13,14 +13,13 @@ powers = []
 for line in lines:
     minimum_needed = {}
 
-    id, games = line.split(":")
-    id = id.split(" ")[1]
-    games = games.split(";")
+    game_id = line.split(":")[0].split(" ")[1]
+    games = line.split(":")[1].split(";")
     possible = True
     for reveal in games:
-        sets = [set.strip() for set in reveal.split(",")]
-        for set in sets:
-            quantity, color = set.split(" ")
+        sets = [s.strip() for s in reveal.split(",")]
+        for s in sets:
+            quantity, color = s.split(" ")
             if color not in minimum_needed:
                 minimum_needed[color] = int(quantity)
             else:
@@ -34,7 +33,7 @@ for line in lines:
                 possible = False
     powers.append(reduce(lambda x, y: x*y, minimum_needed.values()))
     if possible:
-        possible_games.append(int(id))
+        possible_games.append(int(game_id))
 
 print(f"Part 1: {sum(possible_games)}")
 print(f"Part 2: {sum(powers)}")
