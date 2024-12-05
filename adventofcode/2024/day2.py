@@ -9,7 +9,7 @@ safe_with_dampener = 0
 def is_safe(l: List) -> bool:
     return (all(x > 0 for x in l) or all(x < 0 for x in l)) and all(1 <= abs(x) <= 3 for x in l)
 
-def get_diffs(l: List) -> List[int]:
+def get_diffs(l: List[int]) -> List[int]:
     return [a-b for a, b in zip(l, l[1:])]
 
 for line in lines:
